@@ -1,0 +1,155 @@
+﻿@model aplicacao.Servicos.ServicoDePessoa.FormularioPessoa
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@{
+    var tiposDePessoas = new SelectListItem[] { new SelectListItem { Text = "Selecione...", Value = "" }, new SelectListItem { Text = "Pessoa Jurídica", Value = "PJ" }, new SelectListItem { Text = "Pessoa Física", Value = "PF" } };
+    var sexo = new SelectListItem[] { new SelectListItem { Text = "Selecione.....", Value = "" }, new SelectListItem { Text = "Masculino", Value = "M" }, new SelectListItem { Text = "Feminino", Value = "F" } };
+    var estados = new List<SelectListItem>();
+    var cidades = new List<SelectListItem>();
+}
+@Html.HiddenFor(m => m.NumeroDocumento)
+@Html.HiddenFor(m => m.Nome)
+@Html.HiddenFor(m => m.SobreNome)
+<div class="row">
+    <div class="row">
+        <div class="col-xs-12 col-md-4 col-sm-12" id="div_tipo_pessoa">
+            <div class="form-group">
+                @Html.Label("Tipo de Pessoa", new { @class = "required" })
+                @Html.DropDownListFor(m => m.TipoPessoa, tiposDePessoas, new { @class = "form-control", @id = "tipoDePessoa", style = "overflow:scroll" })
+                @Html.ValidationMessageFor(m => m.TipoPessoa, "", new { @class = "form-group has-error" })
+            </div>
+        </div>
+    </div>
+
+    <fieldset id="div_field_pj">
+        <legend>Pessoa Jurídica</legend>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-sm-12" id="div_cnpj">
+                <div class="form-group">
+                    @Html.Label("CNPJ", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.NumeroDocumento, new { @class = "form-control", @id = "cnpj", maxlength = 18 })                    
+                    @Html.ValidationMessageFor(m => m.NumeroDocumento, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-8 col-sm-12">
+                <div class="form-group">
+                    @Html.Label("Nome Fantasia", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @id = "fantasia", maxlength = 100 })                    
+                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                    @Html.Label("Razão Social", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.SobreNome, new { @class = "form-control", @id = "razaoSocial", maxlength = 100 })                    
+                    @Html.ValidationMessageFor(m => m.SobreNome, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset id="div_field_pf">
+        <legend>Pessoa Física</legend>
+        <div class="row">
+            <div class="col-xs-12 col-md-3 col-sm-12" id="div_cpf">
+                <div class="form-group">
+                    @Html.Label("CPF", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.NumeroDocumento, new { @class = "form-control", @id = "cpf", maxlength = 14 })                    
+                    @Html.ValidationMessageFor(m => m.NumeroDocumento, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4 col-sm-12">
+                <div class="form-group">
+                    @Html.Label("Nome", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @id = "nome", maxlength = 100 })
+                    @Html.HiddenFor(m => m.Nome)
+                    @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-5 col-sm-12">
+                <div class="form-group">
+                    @Html.Label(" Sobre Nome", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.SobreNome , new { @class = "form-control", @id = "sobrenome", maxlength = 100 })                    
+                    @Html.ValidationMessageFor(m => m.SobreNome, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3 col-sm-12" id="div_data">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DataNascimento, "Data de Nascimento",new { @class = "required" })
+                    <div class='input-group date' id='datetimepicker2'>
+                        @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control", id = "dataNascimento" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.DataNascimento, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+        </div>
+      
+    </fieldset>
+
+    <fieldset id="div_endereco">
+        <legend>Endereço</legend>
+        <div class="row">
+            <div class="col-xs-12 col-md-3 col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Cep")
+                    @Html.TextBoxFor(m => m.Cep, new { @class = "form-control", @id = "cep", maxlength = 8 })
+                    @Html.ValidationMessageFor(m => m.Cep, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6 col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Logradouro", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Logradouro, new { @class = "form-control", @id = "logradouro", maxlength = 40 })
+                    @Html.ValidationMessageFor(m => m.Logradouro, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3 col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Número", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @id = "numero", maxlength = 20 })
+                    @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-xs-12 col-md-6 col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Complemento do Logradouro")
+                    @Html.TextBoxFor(m => m.Complemento, new { @class = "form-control", @id = "complemento", maxlength = 20 })
+                    @Html.ValidationMessageFor(m => m.Complemento, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            
+            <div class="col-xs-12 col-md-6 col-sm-6">
+
+                @Html.Label("Bairro", new { @class = "required" })
+                @Html.TextBoxFor(m => m.Bairro, new { @class = "form-control", @id = "bairro", maxlength = 80 })
+                @Html.ValidationMessageFor(m => m.Bairro, "", new { @class = "form-group has-error" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Estado", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Uf, new { @class = "form-control", @id = "uf", maxlength = 8 })
+                    @Html.ValidationMessageFor(m => m.Uf, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-8 col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Cidade", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Cidade, new { @class = "form-control", @id = "cidade", maxlength = 80 })
+                    @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "form-group has-error" })
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+
+</div>
+

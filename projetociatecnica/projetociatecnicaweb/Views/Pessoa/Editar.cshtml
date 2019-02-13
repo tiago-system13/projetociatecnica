@@ -1,0 +1,18 @@
+﻿@model aplicacao.Servicos.ServicoDePessoa.FormularioPessoa
+@{
+    Layout = "~/Views/Shared/_LayoutForm.cshtml";
+    ViewBag.Titulo = "Editar Cliente";
+    ViewBag.TextoDeBotaoDeSubmissao = "Salvar";
+    ViewBag.Action = "Editar";
+    ViewBag.Controller = "Pessoa";
+    ViewBag.Cancelar = "Index";
+    ViewBag.FormId = "formCliente";
+}
+@section JsAdicional {
+    @Scripts.Render("~/Views/Pessoa/pessoa.js")
+    @Scripts.Render("~/Views/Pessoa/bucarEndereco.js")
+}
+@section Formulario {
+    @Html.HiddenFor(m=>m.Id, new { id="pessoa"})
+    @RenderPage("~/Views/Pessoa/FormularioDePessoa.cshtml", Model)
+}
